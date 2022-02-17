@@ -1,14 +1,4 @@
-def fill_value(board):
-    for i in range(9):
-        for j in range(9):
-            if (board[i][j] == -1):
-                for k in range(1, 10):
-                    board[i][j] = k
-                    if (check_duplicates(board)):
-                        fill_values_util(board)
-
-
-def fill_values_util(board):
+def fill_values(board):
     if (check_complete(board) and check_duplicates(board)):
         for i in board:
             print(i)
@@ -18,7 +8,8 @@ def fill_values_util(board):
     for k in range(1, 10):
         board[i][j] = k
         if (check_duplicates(board)):
-            fill_values_util(board)
+            if (fill_values(board)):
+                return True
         board[i][j] = -1
     return False
 
@@ -89,17 +80,6 @@ def check_duplicates(board):
 
 
 if __name__ == "__main__":
-    # input_board = [[5, 3, -1, -1, 7, -1, -1, -1, -1],
-    #                [6, -1, -1, 1, 9, 5, -1, -1, -1],
-    #                [-1, 9, 8, -1, -1, -1, -1, 6, -1],
-    #
-    #                [8, -1, -1, -1, 6, -1, -1, -1, 3],
-    #                [4, -1, -1, 8, -1, 3, -1, -1, 1],
-    #                [7, -1, -1, -1, 2, -1, -1, -1, 6],
-    #
-    #                [-1, 6, -1, -1, -1, -1, 2, 8, -1],
-    #                [-1, -1, -1, 4, 1, 9, -1, -1, 5],
-    #                [-1, -1, -1, -1, 8, -1, -1, 7, 9]]
     input_board = [[-1, -1, 1, -1, 2, -1, -1, 5, 7],
                    [-1, -1, -1, -1, -1, -1, -1, -1, 9],
                    [-1, 4, -1, 1, -1, -1, -1, -1, -1],
@@ -113,5 +93,5 @@ if __name__ == "__main__":
     assert len(input_board) == 9, 'The board is not a proper sudoku board!'
     for i in input_board:
         assert len(i) == 9, 'The board is not a proper sudoku board!'
-    if (fill_value(input_board)):
+    if (fill_values(input_board)):
         print("Sudoku Completed!")
